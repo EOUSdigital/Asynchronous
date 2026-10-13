@@ -1,73 +1,315 @@
 "use strict";
 
+//  We do not need to study memory management, garbage collection, or the deeper internals of the JavaScript engine.
 
+//TODO 01. Section introduction
 
+//? The setTimeout() method
 
+// Exercise 1 — Predict the output
 
+console.log("Start");
 
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
 
+console.log("End");
 
+//  Question: What is the exact output order? And explain why.
+// Answer: The output order is Start > End > Timer because the log will display first "Start" followed by the "End" and immediately "Timer". The callback is scheduled with a minimum delay of 0 ms, but it cannot run until the current synchronous JavaScript has finished.
 
+//? Exercise 2 — 0 milliseconds
 
+console.log("A");
 
+setTimeout(() => {
+    console.log("B");
+}, 0);
 
+setTimeout(() => {
+    console.log("C");
+}, 0);
 
+console.log("D");
 
+//  Question: What is the exact output order? Then explain why "B" and "C" appear in that order.
+//  Answer: The output order is A > D > B > C because the log will display the current synchronous JavaScript. The callback is scheduled with a minimum delay of 0 ms and will run after the synchronous order, B first followed by C.
 
+//? Exercise 3 — Callback or function call?
 
+function greet() {
+    console.log("Hello");
+}
 
+console.log("Start");
 
+setTimeout(greet, 0);
 
+console.log("End");
 
+//  Answer these three questions:
+//  1. What is the output order?
+//  2. Which part is the callback?
+//  3. Why is this:
 
+//  1. The output order is "Start" > "End" > "Hello" because it calls the function after passes "Hello" to setTimeout() as a callback.
+//  2. The callback is setTimeout(greet, 0); because is the function who calls the greet() function and call it when appropriate.
+//  3. The setTimeout(greet, 0); is passing the greet() function, and does not follow the asynchronous pattern. setTimeout, call it later.
 
+//?  One more exercise before we move on
 
+function one() {
+    console.log("One");
+}
 
+console.log("Start");
 
+setTimeout(one, 0);
 
+console.log("Middle");
 
+one();
 
+console.log("End");
 
+//? The Call Stack
+//  A call stack is a mechanism for an interpreter (like the JavaScript interpreter in a web browser) to keep track of its place in a script that calls multiple functions — what function is currently being run and what functions are called from within that function, etc.
+//  - When a script calls a function, the interpreter adds it to the call stack and then starts carrying out the function.
+//  - Any functions that are called by that function are added to the call stack further up, and run where their calls are reached.
+//  - When the current function is finished, the interpreter takes it off the stack and resumes execution where it left off in the last code listing.
+//  - If the stack takes up more space than it was assigned, a "stack overflow" error is thrown.
 
+function first() {
+    console.log("First — start");
+    second();
+    console.log("First — end");
+}
 
+function second() {
+    console.log("Second");
+}
 
+first();
 
+//  The output is:
+//  1. First — start
+//  2. Second
+//  3. First — end
 
+//? Exercise Example: Last In, First Out (LIFO)
 
+function first() {
+    console.log("First -start");
+    second();
+    console.log("First -end");
+}
 
+function second() {
+    console.log("Second - start");
+    third();
+    console.log("Second - end");
+}
 
+function third() {
+    console.log("Third");
+}
 
+first();
 
+//  The output is:
+//  1. First — start
+//  2. Second — start
+//  3. Third
+//  4. Second — end
+//  5. First — end
 
+//  Notice the pattern:
+//  1. first() starts and pauses when it calls second().
+//  2. second() starts and pauses when it calls third().
+//  3. third() finishes first.
+//  4. second() resumes and finishes.
+//  5. first() resumes and finishes last.
 
+//! The key principle: a function that calls another function remains active on the stack until its own execution completes.
 
+//? Exercise Example: Last In, First Out (LIFO)
 
+function first() {
+    console.log("First — start");
+    second();
+    console.log("First — end");
+}
 
+function second() {
+    console.log("Second");
+}
 
+first();
 
+//  The sequence is:
+//  1. first() enters the call stack.
+//  2. first() calls second() and pauses.
+//  3. second() enters the top of the stack and executes.
+//  4. second() finishes and its stack frame is removed.
+//  5. first() resumes and logs "First — end".
+//  6. first() finishes and its stack frame is removed.
 
+//TODO Module 4
 
+//  A — New execution context: Each time greet() function is called, JavaScript creates a new execution context for that invocation.
+//  B — Execution context removed: When the call finishes, its execution context is removed from the call stack. The function itself is not automatically deleted from memory.
 
+//? The key distinction to remember is:
+//  Execution context = the environment in which a particular function call executes.
+//  Call stack = the structure that tracks active function calls and the order in which they execute.
 
+//TODO  02. Under the Hood: Thread of Execution
 
+function first() {
+    console.log("First — start");
+    second();
+    console.log("First — end");
+}
 
+function second() {
+    console.log("Second");
+}
 
+first();
 
+//  The output is:
+//  1. First — start
+//  2. Second
+//  3. First — end
 
+// -------------------------------------------
 
+const username = "Alex";
 
+function greet() {
+    const message = "Hello, " + username;
+    console.log(message);
+}
 
+greet();
 
+//  The output is:
+//  Hello, Alex
 
+//TODO  03. Under the Hood: How Async JS Works
 
+//  Our goal in this lesson is to understand how JavaScript can arrange for work to happen later without blocking the rest of the code from running.
 
+//* 1. Start with what you already know
+//  Consider this code:
 
+console.log("A");
 
+function greet() {
+    console.log("B");
+}
 
+greet();
 
+console.log("C");
 
+//  JavaScript executes synchronous code in order. The output is:   A   B   C
+//  When JavaScript reaches greet(), it calls the function, executes its body, returns from the function, and continues with console.log("C").
+//  Nothing surprising so far. The call stack helps JavaScript keep track of those active function calls.
 
+//  Now let's introduce asynchronous behaviour.
 
+//* 2. What happens when we use setTimeout()?
+
+console.log("A");
+
+setTimeout(() => {
+    console.log("B");
+}, 0);
+
+console.log("C");
+
+//  The output is:  A   C   B
+//  Notice that B is printed last, even though the delay is 0 milliseconds. Why?
+//  When JavaScript reaches setTimeout(), it registers a callback to be executed later. The callback does not run immediately as part of the current synchronous sequence. JavaScript continues to the next statement and prints C.
+//  Once the current synchronous work has finished, the scheduled callback can run.
+//  The important point is that setTimeout() does not pause the entire program and wait for the callback.
+
+//* 3. The key pieces working together
+
+//  For this lesson, we need to distinguish three things:
+//  1. Call stack - Tracks the JavaScript function calls currently being executed.
+//  2. Browser APIs - In a browser, facilities such as timers can handle waiting outside the JavaScript call stack.
+//  3. Task queue and event loop - The task queue holds callbacks ready to be processed. The event loop coordinates when queued work can run, including waiting until the call stack is clear.
+
+//! One useful clarification: the browser APIs, task queue and event loop are not all parts of the JavaScript call stack. They are separate parts of the environment that work together to support asynchronous behaviour.
+
+//* 4. Trace the execution
+
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+
+//  The exact output order is:
+//  Start → End → Timer
+//  The synchronous statements execute before the timer callback.
+
+//  The callback is scheduled for later, allowing synchronous code to finish first.
+
+//* 5. Consider this variation:
+
+console.log("A");
+
+setTimeout(() => {
+    console.log("B");
+}, 0);
+
+setTimeout(() => {
+    console.log("C");
+}, 0);
+
+console.log("D");
+
+//  The exact output order is:
+//  A → D → B → C
+
+//  1. Synchronous code runs first. JavaScript prints A, schedules the first timer, schedules the second timer, and then prints D.
+//  2. The callbacks run afterwards. Both timers have a delay of 0 milliseconds, but neither callback interrupts the synchronous code. In this example, the callbacks run in the order they were scheduled: B, then C.
+
+//* 6. Imagine this code:
+
+function doWork() {
+    const start = Date.now();
+
+    while (Date.now() - start < 2000) {
+        // Keep JavaScript busy for approximately 2 seconds
+    }
+
+    console.log("Work finished");
+}
+
+setTimeout(() => {
+    console.log("Timer callback");
+}, 0);
+
+doWork();
+
+//  The output is:
+//  1. Work finished
+//  2. Timer callback
+
+//  Here's why:
+//  1. setTimeout() schedules the callback with a minimum delay of zero milliseconds. It does not pause JavaScript.
+//  2. doWork() then runs synchronously and occupies the JavaScript call stack for approximately two seconds.
+//  3. Even if the timer has already expired, its callback cannot interrupt the currently executing synchronous function.
+//  4. Once doWork() finishes and the call stack becomes clear, the callback can run.
+
+//  The key distinction: the timer's delay and the time JavaScript spends executing synchronous code are separate. The timer doesn't stop counting while synchronous code runs; rather, the callback must wait until JavaScript can process it.
 
 
 
