@@ -347,7 +347,116 @@ console.log("Forth");
 //  2. Even though the timer delay is zero, console.log('Second') cannot run immediately because the callback is scheduled for later. JavaScript continues executing the synchronous code, and the event loop allows the callback to run when the current execution has finished and the callback can be processed.
 
 
-//TODO  Lesson 04. setTimeout and clearTimeout Functions
+//TODO  Lesson 04. setTimeout and clearTimeout method
+
+//  Schedule a callback, understand the timer ID it returns, and cancel a scheduled callback when necessary.
+
+//* 1. Using setTimeout()
+
+setTimeout(() => {
+    console.log("Hello after 2 seconds");
+}, 2000);
+
+//  There are two important arguments:
+//  - First argument: the callback function to execute.
+//  - Second argument: the delay in milliseconds. Here, 2000 means 2,000 milliseconds, or 2 seconds.
+//  Remember, the delay is a minimum waiting period, not a guarantee that the callback executes at exactly two seconds.
+
+//* 2. Understanding the timer ID
+
+//  setTimeout() returns a value identifying the scheduled timer. We can store that value in a variable:
+
+const timerId = setTimeout(() => {
+    console.log("This message is scheduled");
+}, 3000);
+
+console.log(timerId);
+
+//! The value of timerId can be passed to clearTimeout() to cancel that timer. The exact type of the returned value depends on the JavaScript environment.
+
+//* 3. Cancelling a timer with clearTimeout()
+
+const timerId = setTimeout(() => {
+    console.log("You should not see this message");
+}, 3000);
+
+clearTimeout(timerId);
+
+//? The timer is cancelled before its callback executes, so the message is not printed.
+//! A crucial detail: clearTimeout() can cancel a pending timer; it cannot undo a callback that has already started executing.
+
+
+//* Short prediction exercise
+
+console.log("Start");
+
+const timerId = setTimeout(() => {
+    console.log("Timer fired");
+}, 2000);
+
+clearTimeout(timerId);
+
+console.log("End");
+
+//  The actual output is: Start → End
+
+//? Why?
+//  1. console.log("Start") runs immediately.
+//  2. setTimeout() schedules the callback with a 2,000-millisecond delay and returns a timer ID.
+//  3. clearTimeout(timerId) cancels that pending timer. It does not change the delay to zero; it prevents the scheduled callback from executing.
+//  4. console.log("End") runs immediately afterwards.
+//  5. "Timer fired" is never printed because its timer was cancelled.
+//  The key distinction is that clearTimeout() cancels a pending timer; it does not make the callback run sooner.
+
+
+//* Suppose we change the code to this:
+
+const timerId = setTimeout(() => {
+    console.log("Hello");
+}, 3000);
+
+clearTimeout(timerId);
+
+setTimeout(() => {
+    console.log("Goodbye");
+}, 0);
+
+//? The output is "Goodbye" only, because clearTimeout(timerId) cancels the pending timer, and it will prevent the scheduled callback from executing. The "Hello" is never printed because its timer was cancelled.
+
+//  Accurate reasoning:
+//  1. clearTimeout(timerId) cancels the pending "Hello" timer.
+//  2. The second setTimeout() schedules "Goodbye" independently, with a delay of zero milliseconds.
+//  3. "Goodbye" is printed after the synchronous code finishes because its timer has not been cancelled.
+
+
+//* Relying on the example
+
+const timerId = setTimeout(() => {
+    console.log("First");
+}, 1000);
+
+setTimeout(() => {
+    clearTimeout(timerId);
+    console.log("Second");
+}, 0);
+
+//  The actual output is:
+//  1. The first setTimeout() schedules "First" to run after approximately 1,000 milliseconds and returns timerId.
+//  2. The second setTimeout() schedules its callback with a delay of zero.
+//  3. That second callback becomes eligible to run first, because its timer has the shorter delay.
+//  4. It calls clearTimeout(timerId), cancelling the still-pending "First" timer.
+//  5. It prints "Second". The "First" callback never executes.
+
+//! The key principle is that a timer callback can cancel another timer, provided that timer's callback has not already started executing.
+
+
+//  The setTimeout() method schedule a timer which executes a function once the timer expires. The clearTimeout() method interface cancel a timeout previously established.
+
+
+
+
+
+
 
 
 
