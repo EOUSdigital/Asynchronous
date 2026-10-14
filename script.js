@@ -310,16 +310,44 @@ doWork();
 //  4. Once doWork() finishes and the call stack becomes clear, the callback can run.
 
 //  The key distinction: the timer's delay and the time JavaScript spends executing synchronous code are separate. The timer doesn't stop counting while synchronous code runs; rather, the callback must wait until JavaScript can process it.
+//  Also, setTimeout() does not dictate the order of all code. Synchronous execution order, timer scheduling and the event loop all matter.
+
+//! Important
+//Q: Has the callback necessarily run as soon as the delay expires, or can it be ready to run but still waiting? Explain the difference.
+//A: There are two separate events to distinguish:
+//   1. The timer expires. The specified delay has elapsed, so the callback becomes eligible to run. It may be placed in the task queue, waiting to be processed.
+//   2. The callback actually executes. JavaScript gets an opportunity to process that callback after the currently running synchronous code has finished.
+//  The important distinction is that being ready to run is not the same as actually running.
+
+//* Final check for Lesson 03
+
+//  Consider this code:
+
+console.log("First");
+
+setTimeout(() => {
+    console.log("Second");
+}, 0);
+
+function work() {
+    console.log("Third");
+}
+
+work();
+
+console.log("Forth");
+
+//  Explain:
+//  1. The exact output order is: First → Third → Forth → Second
+//      1.1. console.log("First") executes immediately.
+//      1.2. setTimeout() schedules the callback containing console.log("Second") to run later.
+//      1.3. JavaScript continues executing synchronously. It calls work(), which prints "Third".
+//      1.4. work() finishes, and JavaScript prints "Fourth".
+//      1.5. Once the synchronous work finishes, the timer callback can run, printing "Second".
+//  2. Even though the timer delay is zero, console.log('Second') cannot run immediately because the callback is scheduled for later. JavaScript continues executing the synchronous code, and the event loop allows the callback to run when the current execution has finished and the callback can be processed.
 
 
-
-
-
-
-
-
-
-
+//TODO  Lesson 04. setTimeout and clearTimeout Functions
 
 
 
