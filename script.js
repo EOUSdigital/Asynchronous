@@ -453,11 +453,57 @@ setTimeout(() => {
 //  The setTimeout() method schedule a timer which executes a function once the timer expires. The clearTimeout() method interface cancel a timeout previously established.
 
 
+//TODO  Lesson 05 — setInterval() and clearInterval()
 
+//  Repeat an action at regular intervals and stop that repetition when needed.
 
+//* 1. Using setInterval()
+//  Imagine we want to print a message every two seconds.
 
+setInterval(() => {
+    console.log("Hello again!");
+}, 2000);
 
+//  This looks very similar to setTimeout(), but there is one important difference:
+//  - setTimeout() schedules a callback to run once.
+//  - setInterval() schedules a callback to run repeatedly, at the specified interval.
+//  Here, the callback is scheduled to repeat approximately every 2,000 milliseconds (two seconds). It does not guarantee execution at exact two-second intervals, because JavaScript may be busy processing other work.
 
+//* 2. Stopping repetition with clearInterval()
+//  If we leave the interval running, it continues scheduling repetitions until it is cancelled or the environment stops it.
+
+//  We can store the interval ID and use it to stop the repetition:
+
+const intervalId = setInterval(() => {
+    console.log("Hello again!");
+}, 2000);
+
+clearInterval(intervalId);
+
+//  In this example, the interval is cancelled immediately, so the callback will not run if it has not already started.
+
+//? Notice the pairing:
+//  Start or schedule                   Stop or cancel
+//  setTimeout()                        clearTimeout()
+//  setInterval()                       clearInterval()
+//  Each pair has a different purpose. Use the matching cancellation function for the timer you've created.
+
+//? Exercise
+
+//* Consider this code:
+
+console.log("Start");
+
+const intervalId = setInterval(() => {
+    console.log("Tick");
+}, 1000);
+
+setInterval(() => {
+    clearInterval(intervalId);
+    console.log("Stopped");
+}, 3200);
+
+console.log("End");
 
 
 
