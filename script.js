@@ -505,6 +505,148 @@ setInterval(() => {
 
 console.log("End");
 
+//  The actual output is:
+//  1. console.log("Start") prints Start immediately.
+//  2. setInterval() schedules the Tick callback to repeat approximately every second.
+//  3. setTimeout() schedules a separate callback to run after approximately 3.2 seconds.
+//  4. console.log("End") prints End immediately. Neither timer pauses synchronous execution.
+//  5. The interval callback prints Tick repeatedly while the interval remains active.
+//  6. After approximately 3.2 seconds, the timeout callback calls clearInterval(intervalId), stopping further repetitions, then prints Stopped.
+
+//  We use setTimeout() to schedule a one-time callback that will stop the interval after approximately 3.2 seconds.
+
+//* Next check
+
+let count = 0;
+
+const intervalId = setInterval(() => {
+    count++;
+    console.log(count);
+
+    if (count === 3) {
+        clearInterval(intervalId);
+        console.log("Finished");
+    }
+}, 1000);
+
+//  The actual output is: 1 → 2 → 3 → Finished
+//  1. set the "count" variable with let that can declares re-assignable, block-scoped local variables, optionally initializing each to a value.
+//  2. set the "intervalId" variable with const that cannot be changed through reassignment using the assignment operator, but if a constant is an object, its properties can be added, updated, or removed.
+//  3. setInterval() schedules the "Finished" callback to repeat approximately every second.
+//  4. count will increment (++) operator increments (adds one to) its operand and returns the value before or after the increment, depending on where the operator is placed.
+//  5. console.log(count); prints the number counted immediately.
+//  6. if statement executes a statement if a specified condition is truthy. In this case "if" "count" is strictly equal(===) with 3
+//  7. After approximately 1 second, the timeout callback calls clearInterval(intervalId), stopping further repetitions, then prints "Finished".
+
+
+//* Quick check
+//  What is the key difference between these two pairs?
+//  - setTimeout() and clearTimeout()
+//  - setInterval() and clearInterval()
+
+//* How often the scheduled callback runs.
+//  - setTimeout() schedules a callback to run once after a specified delay. clearTimeout() cancels it if it has not run yet.
+//  - setInterval() schedules a callback to run repeatedly, at approximately the specified interval. clearInterval() stops future repetitions.
+
+//? setInterval() & clearInterval(): Complete
+//  - setInterval() repeats a callback at approximately regular intervals.
+//  - clearInterval() stops future repetitions.
+//  - setTimeout() schedules a callback to run once after a delay.
+//  - clearTimeout() cancels a pending timeout.
+//  - Timer delays are approximate, and callbacks don’t interrupt synchronous JavaScript execution.
+
+//TODO  Next: Lesson 06 — Callbacks
+
+//  A callback is a function passed to another function so it can be called later or at an appropriate point during that function’s work.
+
+//* Here’s a simple example:
+
+function greet(name) {
+    console.log("Hello, " + name);
+}
+
+function processUser(callback) {
+    callback("Alex");
+}
+
+processUser(greet);
+
+//  The actual output is: Hello, Alex
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
