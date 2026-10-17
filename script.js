@@ -574,6 +574,19 @@ processUser(greet);
 //  The actual output is: Hello, Alex
 
 
+//* Exercise Consider Printing
+
+function sayHello() {
+    console.log("Hello!");
+}
+
+const result = sayHello();
+console.log(result);
+
+//  The output is:
+//  Hello!
+//  undefined
+
 
 
 
