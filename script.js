@@ -588,10 +588,30 @@ console.log(result);
 //  undefined
 
 
+//* One small exercise
 
+//  Consider this code:
 
+function getName() {
+    return "Alex";
+}
 
+const person  = getName();
+console.log(person);
 
+//  The console will display "Alex", and the value stored in person is "Alex". The function returns "Alex" and the variable person is equal to any given return by the function. The console.log(person) prints the person value immediately.
+
+//* Consider this code:
+
+function greet() {
+    console.log("Hello!");
+}
+
+function processUser(callback) {
+    callback();
+}
+
+processUser(greet);
 
 
 
