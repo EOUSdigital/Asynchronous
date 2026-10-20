@@ -2,6 +2,9 @@
 
 //  We do not need to study memory management, garbage collection, or the deeper internals of the JavaScript engine.
 
+//  Synchronous callback: called as part of the current, ongoing execution.
+//  Asynchronous callback: scheduled to run later, such as a setTimeout() callback.
+
 //TODO 01. Section introduction
 
 //? The setTimeout() method
@@ -613,25 +616,107 @@ function processUser(callback) {
 
 processUser(greet);
 
+//  Question: What gets printed, and which line actually causes greet to run?
+//  Solution:
+//  1. processUser(greet) calls processUser and passes the greet function to it.
+//  2. Inside processUser, the parameter callback now refers to the greet function.
+//  3. callback() is the line that actually calls greet and prints "Hello!".
+
+//  Remember: greet is the function being passed; callback() is how that function is called inside processUser.
 
 
+//* The callback receives a value:
+
+function greet(name) {
+    console.log(("Hello, " + name));
+}
+
+function processUser(callback) {
+    callback("Alex");
+}
+
+processUser(greet);
+
+//  Question: When JavaScript executes callback("Alex"), which parameter receives the value "Alex" — callback or name?
+//  Solution: The parameter "name" will receive the value "Alex". The greet function is passed into processUser. The parameter callback now refers to that function. Because callback refers to greet, this is effectively the same as calling: greet("Alex"). 
+
+//  When greet("Alex") runs, its parameter name receives "Alex".
+//  Think of it as two separate jobs:
+//  - callback holds a reference to the function.
+//  - name receives the string argument passed to that function.
+//  The output is Hello, Alex.
 
 
+//* Let's consolidate what you've learned
+
+function greet(name) {
+    console.log("Hello, " + name);
+}
+
+function processUser(callback) {
+    callback("Sam");
+}
+
+processUser(greet);
+
+//  Solution and key steps:
+//  1. processUser(greet) passes the greet function into processUser.
+//  2. The parameter callback refers to greet.
+//  3. callback("Sam") calls greet, passing "Sam" as its argument.
+//  4. The name parameter receives "Sam".
+//  5. console.log() prints Hello, Sam.
+
+//! A callback is a function passed to another function so that the receiving function can call it.
 
 
+//* Follow up:
+
+//  If we change this line: 
+processUser(greet);
+
+//  to this: 
+processUser(greet());
+
+//  Question: Would the greeting still work as intended? Explain what happens when greet() is evaluated first.
+//  Solution: JavaScript executes greet() immediately, but "name" is undefined. The greet() prints "Hello, undefined" and returns: undefined (because there is no return statement).
+
+//  Solution and key steps:
+//  1. JavaScript evaluates greet() first.
+//  2. Because no argument is supplied, name is undefined.
+//  3. greet() prints Hello, undefined.
+//  4. Because greet() has no return statement, its return value is undefined.
+//  5. JavaScript then calls processUser(undefined).
+//  6. Inside processUser, callback("Sam") attempts to call undefined as a function, causing a TypeError.
 
 
+//* When does a callback run?
 
+function sayHello() {
+    console.log("Hello!");
+}
 
+function doSomething(callback) {
+    console.log("Start");
+    callback();
+    console.log("End");
+}
 
+doSomething(sayHello);
 
+//  Key steps:
+//  1. doSomething(sayHello) passes the sayHello function to doSomething.
+//  2. callback() calls the function received through the callback parameter.
+//  3. console.log() displays a message in the console.
 
+//  Your task, without running the code, tell me:
+//  1. What three messages will appear in the console?
+//  1. The messages that will appear in the console will be Start, Hello, and End
 
+//  2. In what order will they appear?
+//  2. The output is Start → Hello → End
 
-
-
-
-
+//  3. Does sayHello run immediately during the execution of doSomething, or is it scheduled to run later?
+//  3. The sayHello function runs immediately during the execution of doSomething because it is not scheduled to run later. Does not have setup a setTimeout() that schedule a callback to run once or a setInterval() that schedule a callback to run repeatedly, at the specified interval. 
 
 
 
