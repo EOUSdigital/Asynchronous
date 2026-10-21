@@ -713,23 +713,84 @@ doSomething(sayHello);
 //  1. The messages that will appear in the console will be Start, Hello, and End
 
 //  2. In what order will they appear?
-//  2. The output is Start → Hello → End
+//  2. The output order is: Start → Hello → End
 
 //  3. Does sayHello run immediately during the execution of doSomething, or is it scheduled to run later?
 //  3. The sayHello function runs immediately during the execution of doSomething because it is not scheduled to run later. Does not have setup a setTimeout() that schedule a callback to run once or a setInterval() that schedule a callback to run repeatedly, at the specified interval. 
 
 
+//* Can you predict the difference?
+
+function sayHello() {
+    console.log("Hello!");
+}
+
+function doSomething(callback) {
+    console.log("Start");
+
+    setTimeout(callback, 0);
+
+    console.log("End");
+}
+
+doSomething(sayHello);
+
+//  The only meaningful change is that we now use setTimeout(callback, 0) instead of callback().
+
+//  Answer these three questions:
+//  1. What is the output order?
+//  1. The output order is: Start → End → Hello
+
+//  2. Does sayHello() run before or after console.log("End")?
+//  2. The sayHEllo() function will run after console.log("End") because setTimeout() schedules the callback rather than calling it directly.
+
+//  3. Why does not a delay of 0 make the callback run immediately?
+//  3. 3. The callback will not run immediately even if the delay is 0 because it is included inside setTimeout. It will follow the setTimeout protocol with a 0 milliseconds delay and run immediately, JavaScript completes all the tasks.
+
+//  The execution sequence:
+//  1. Print Start.
+//  2. Schedule callback with setTimeout(callback, 0).
+//  3. Print End — synchronous execution continues.
+//  4. Run the timer callback when it is eligible and JavaScript can process it.
 
 
+//* Next exercise: Let's test your understanding
+
+//  Consider this code:
+
+function first() {
+    console.log("First");
+}
+
+function second(callback) {
+    console.log("Second");
+    callback();
+    console.log("Third");
+}
+
+console.log("Start");
+second(first);
+console.log("End");
+
+//  Without running the code, answer these two questions:
+//  1. What is the exact output order?
+//  1. The output order is: Start → Second → First → Third → End
+
+//  2. Why does first() run at that particular point in the sequence?
+//  2. The first() runs in this particular order because is called by the second() in synchronous order. In this execution we do not have asynchronous.
+
+//  Execution sequence:
+//  1. Print Start.
+//  2. Call second(first).
+//  3. Print Second.
+//  4. Execute callback(), which calls first() and prints First.
+//  5. Return from first() and continue inside second(), printing Third.
+//  6. Finish second() and print End.
+
+//! The key principle: a synchronous callback runs when the receiving function calls it, and the receiving function continues after the callback finishes.
 
 
-
-
-
-
-
-
-
+//* A callback that receives data
 
 
 
