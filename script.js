@@ -792,22 +792,73 @@ console.log("End");
 
 //* A callback that receives data
 
+function showResult(value) {
+    console.log("Result:", value);
+}
+
+function calculate(callback) {
+    console.log("Calculating...");
+    callback(10 + 5);
+    console.log("Done");
+}
+
+calculate(showResult);
+
+//  Without running the code, tell me:
+//  1. What is the exact output, in order?
+//  1. The output order is: Calculating... → Result: 15 → Done
+
+//  2. What value does the parameter value receive?
+//  2. The parameter receives a value of 15.
+
+//  3. Why does showResult receive that value?
+//  3. The showResult receives the calculated callback() value and is transferred when it is called in calculate(showResult).
+
+//  Execution sequence:
+//  1. calculate(showResult) passes the showResult function to calculate.
+//  2. The parameter callback refers to showResult.
+//  3. callback(10 + 5) evaluates 10 + 5 to 15 and calls showResult(15).
+//  4. The parameter value receives 15.
+//  5. showResult prints Result: 15, then execution returns to calculate, which prints Done.
+
+//! Notice an important detail: the callback isn't returning the calculated value. The calculate function passes the value 15 into the callback as an argument.
 
 
+//* Next exercise: Follow the value
 
+//  Consider this code:
 
+function double(number) {
+    return number * 2;
+}
 
+function processNumber(callback) {
+    const result = callback(5);
+    console.log(result);
+}
 
+processNumber(double);
 
+//  Take your time. Answer these questions in your own words:
+//  1. What number is passed into double?
+//  1. The number passed into double is 5.
 
+//  2. What does double return?
+//  2. Double return 10.
 
+//  3. What value is stored in result?
+////  3. We store 5 in the result variable.
+//  3. Since callback refers to double, the expression callback(5) evaluates to 10. Therefore, result stores 10, not 5.
 
+//  4. What appears in the console, and why?
+////  4. On the console, it will appear 10 because this is the result of the print.
+//  4. The result stores the callback's return value, not the original argument passed into the callback.
 
-
-
-
-
-
+//  Execution sequence: 
+//  1. processNumber(double) passes the double function to calculate
+//  2. The variable result refers to double
+//  3. return number * 2 evaluates  5 * 2 to 10 and calls result
+//  4. The result prints 10
 
 
 
