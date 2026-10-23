@@ -854,32 +854,81 @@ processNumber(double);
 ////  4. On the console, it will appear 10 because this is the result of the print.
 //  4. The result stores the callback's return value, not the original argument passed into the callback.
 
-//  Execution sequence: 
-//  1. processNumber(double) passes the double function to calculate
-//  2. The variable result refers to double
-//  3. return number * 2 evaluates  5 * 2 to 10 and calls result
-//  4. The result prints 10
+
+//* Execution sequence together
+
+function double(number) {
+    return number * 2;
+}
+
+function processNumber(callback) {
+    const result = callback(8);
+    console.log(result);
+}
+
+processNumber(double);
+
+//! Solution:
+
+//  Step 1 — Pass the function
+
+processNumber(double);
+
+//  This passes the double function to processNumber. The parameter callback now refers to double.
+//  One small correction: we are not passing double to a function called calculate. We are passing it to processNumber.
+
+//  Step 2 — Call the callback
+
+const result = callback(8);
+
+//  Because callback refers to double, this is equivalent to:
+
+const result = double(8);
+
+//  Notice that result does not refer to the double function. It will store the value returned by calling that function.
+
+//  Step 3 — Calculate and return
+
+return number * 2;
+
+//  - number receives 8.
+//  - number * 2 calculates 16.
+//  - double(8) returns 16.
+
+//  That returned value goes back to the assignment in processNumber.
+
+//  Step 4 — Store and print
+
+const result = callback(8);
+console.log(result);
+
+//  The assignment becomes effectively:
+const result = 16;
+
+//  Therefore, the console prints:
+16
+
+//  The important distinction: the argument goes into the function; the returned value comes out of the function and is stored in result.
 
 
+//* Practice the same idea once more
 
+//  We will keep the structure identical and change only the number.
 
+function double(number) {
+    return number * 2;
+}
 
+function processNumber(callback) {
+    const result = callback(6);
+    console.log(result);
+}
 
+processNumber(double);
 
+//! Solution
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//  The value stored in the result is 12 because the argument goes into the function; the returned value comes out of the function and is stored in result.
 
 
 
