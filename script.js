@@ -930,6 +930,114 @@ processNumber(double);
 
 //  The value stored in the result is 12 because the argument goes into the function; the returned value comes out of the function and is stored in result.
 
+//  Execution sequence:
+//  1. processNumber(double) passes the double function to processNumber.
+//  2. callback(6) calls double(6).
+//  3. double receives 6 and returns 12.
+//  4. result stores 12.
+//  5. console.log(result) prints 12.
+
+
+//* Next challenge: Can you trace a different return value?
+
+function addFive(number) {
+    return number + 5;
+}
+
+function processNumber(callback) {
+    const result = callback(6);
+    console.log(result);
+}
+
+processNumber(addFive);
+
+//  Without running the code, tell me:
+//  1. What value does number receive?
+//  1. The number will receive a value of 6.
+
+//  2. What value does addFive return?
+//  2. The addFive function will return a value of 11.
+
+//  3. What value is stored in result?
+//  3. The value stored in the result is 11.
+
+//  4. What appears in the console?
+//  4. The console will print 11.
+
+//  Reviewed execution trace:
+//  1. Argument: callback(6) calls addFive(6), so number receives 6.
+//  2. Return value: addFive calculates 6 + 5 and returns 11.
+//  3. Assignment: result receives and stores 11.
+//  4. Console: console.log(result) prints 11.
+
+
+//* Next challenge: Does every callback return a value?
+
+function showNumber(number) {
+    console.log(number);
+}
+
+function processNumber(callback) {
+    const result = callback(6);
+    console.log("Result:", result);
+}
+
+processNumber(showNumber);
+
+//  Your task:
+//  1. What will appear in the console, in order? 
+//  1. The console will print:
+//      A. Result: 6
+//      B. 6
+
+//  2. And what value will be stored in result?
+//  2. The value stored in the result is 6 because it is the only value available in both functions.
+
+//! Here's what happens:
+//  1. processNumber(showNumber) passes the showNumber function as the callback.
+//  2. callback(6) calls showNumber(6).
+//  3. showNumber prints 6. It has no return statement, so its return value is undefined.
+//  4. result therefore stores undefined.
+//  5. console.log("Result:", result) prints Result: undefined.
+
+//  The actual output is:
+//  6
+//  Result: undefined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
