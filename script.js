@@ -1001,32 +1001,82 @@ processNumber(showNumber);
 //  5. console.log("Result:", result) prints Result: undefined.
 
 //  The actual output is:
-//  6
-//  Result: undefined
+//  A. 6
+//  B. Result: undefined
+
+//! The important distinction is that the value 6 is passed into the callback, but the callback doesn't return that value. Printing a value doesn't automatically return it.
+
+//* Consider this example:
+
+function greetUser(name, callback) {
+    console.log("Hello, " + name);
+
+    setTimeout(callback, 2000);
+}
+
+function sayGoodbye() {
+    console.log("Goodbye!");
+}
+
+greetUser("Alex", sayGoodbye);
+console.log("Welcome!");
+
+//  There are two key ideas here:
+//  - sayGoodbye is passed as a callback to greetUser.
+//  - setTimeout schedules that callback to run after approximately two seconds, rather than calling it immediately.
+
+//  Solution
+//  Tell me the output order, including which message appears after approximately two seconds.
+//  The output order is: Welcome! → Hello, Alex → Goodbye!
+
+//  Then explain briefly why sayGoodbye does not run immediately.
+//  The sayGoodbye function does not run immediately because it will wait for greetUser to complete.
+
+//  Feedback
+
+//  Step 1: JavaScript calls greetUser
+
+greetUser("Alex", sayGoodbye);
+//  Two arguments are passed into the function:
+//  - "Alex" is assigned to the parameter name.
+//  - sayGoodbye is passed as a function to the parameter callback.
+//  Notice that we write sayGoodbye, not sayGoodbye(). We are passing the function itself, not calling it immediately.
+
+//  Step 2: The first message is printed
+
+console.log("Hello, " + name);
+//  Since name contains "Alex", the console immediately displays: Hello, Alex
+
+//  Step 3: The callback is scheduled
+
+setTimeout(callback, 2000);
+//  This tells JavaScript to schedule the callback to run after a delay of approximately two seconds.
+//  It does not pause the execution of greetUser for two seconds. The function continues, reaches its closing brace and finishes.
+
+//  Step 4: JavaScript continues with the next line
+
+console.log("Welcome!");
+//  This runs without waiting for the timer. The console now displays: Welcome!
+
+//  Step 5: The timer callback runs
+//  After approximately two seconds, when JavaScript is able to process the scheduled callback, sayGoodbye runs and prints: Goodbye!
+
+//  The complete output order is therefore:
+//  Hello, Alex
+//  Welcome!
+//  Goodbye!
+
+//  Your original answer had the first two messages in the wrong order. Your second explanation was close, but the reason isn't that sayGoodbye waits for greetUser to complete alone. It waits for the timer delay to expire and for JavaScript to be able to process the callback.
+
+//  One thing to take away
+//  You do not need to answer another question about this example yet. First, make sure this sequence makes sense:
+
+//! greetUser starts → prints the greeting → schedules the callback → finishes → prints Welcome! → the timer callback prints Goodbye!.
 
 
+//* Our next step: build something
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//  Imagine you're building a simple notification system. One function performs an action, then calls another function to report that the action has finished.
 
 
 
