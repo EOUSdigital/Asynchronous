@@ -1076,16 +1076,29 @@ console.log("Welcome!");
 
 //* Our next step: build something
 
-//  Imagine you're building a simple notification system. One function performs an action, then calls another function to report that the action has finished.
+//  Imagine you are building a simple notification system. One function performs an action, then calls another function to report that the action has finished.
+
+//  Pseudocode
+//  1. I must create a notification system.
+//  2. I need two functions. One will perform an action, then the second function will must report the complete action.
+
+function performAction(notification) {
+    console.log("A new day");
+    return notification;
+}
+
+function completeAction(callback) {
+    callback();
+}
+
+completeAction(performAction);
 
 
-
-
-
-
-
-
-
+//  Review my code against my four questions, explain the important issues, and then let me improve it by myself rather than replacing my work with a finished solution.
+//  1. Is this system structured in a clean, scalable way? 
+//  2. Does this naming convention and layout make sense to someone seeing it fresh?
+//  3. Can this loop or query be made more efficient?
+//  4. Are there any parts or logic flaws I missed?
 
 
 
