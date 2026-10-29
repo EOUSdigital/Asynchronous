@@ -1087,16 +1087,33 @@ function performAction() {
 }
 
 function completeAction(callback) {
-    console.log("Action complete!");
     callback();
+    console.log("Action complete!");
 }
 
 completeAction(performAction);
 
+//  Execution sequence:
+//  1. completeAction(performAction) calls completeAction and passes the performAction function to it.
+//  2. The parameter callback refers to performAction.
+//  3. callback() calls performAction, which prints "A new day!".
+//  4. Once that callback finishes, JavaScript continues to the next line and prints "Action complete!".
 
 
+//* Extended design
 
+function performAction(message) {
+    console.log(message);
+}
 
+function completeAction(callback) {
+    callback();
+    console.log("A new day!");
+    console.log("Time to learn JavaScript!");
+    console.log("Action complete!");
+}
+
+completeAction(performAction);
 
 
 
