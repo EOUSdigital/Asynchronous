@@ -1129,6 +1129,76 @@ callback("Time to learn JavaScript!");
 //  - Passing information into the callback when calling it.
 
 
+//* Project: A simple daily activity sequence
+
+function performAction() {
+    // Your code
+}
+
+function completeAction() {
+    // Your code
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
