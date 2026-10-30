@@ -1107,18 +1107,26 @@ function performAction(message) {
 }
 
 function completeAction(callback) {
-    callback();
     console.log("A new day!");
-    console.log("Time to learn JavaScript!");
+    callback("Time to learn JavaScript!");
     console.log("Action complete!");
 }
 
 completeAction(performAction);
 
+//  Execution sequence:
+completeAction(performAction);
+//  1. performAction is handed to completeAction.
+//  2. callback now refers to performAction.
+callback("Time to learn JavaScript!");
+//  3. The callback is called with a message.
+//  4. performAction receives that message as its message parameter.
+//  5. console.log(message) prints it.
 
-
-
-
+//  Important callback skills:
+//  - Passing a function without executing it.
+//  - Calling that function through a callback parameter.
+//  - Passing information into the callback when calling it.
 
 
 
