@@ -1131,18 +1131,24 @@ callback("Time to learn JavaScript!");
 
 //* Project: A simple daily activity sequence
 
-function performAction() {
-    // Your code
+function performAction(newMessage) {
+    console.log(newMessage);
 }
 
-function completeAction() {
-    // Your code
+function completeAction(callback) {
+    callback("This is a message passed from completeAction function to performAction function.");
+    console.log("Action complete!");
 }
 
+completeAction(performAction);
 
-
-
-
+//  Execution sequence:
+//  1. performAction is passed to completeAction.
+//  2. The parameter callback refers to performAction.
+//  3. callback(...) executes performAction and passes it the message.
+//  4. performAction prints the message.
+//  5. Execution returns to completeAction.
+//  6. "Action complete!" is printed.
 
 
 
