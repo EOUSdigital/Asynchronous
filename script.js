@@ -558,6 +558,7 @@ const intervalId = setInterval(() => {
 //  - clearTimeout() cancels a pending timeout.
 //  - Timer delays are approximate, and callbacks don’t interrupt synchronous JavaScript execution.
 
+
 //TODO  Next: Lesson 06 — Callbacks
 
 //  A callback is a function passed to another function so it can be called later or at an appropriate point during that function’s work.
@@ -1135,12 +1136,12 @@ function performAction(newMessage) {
     console.log(newMessage);
 }
 
-function completeAction(callback) {
-    callback("This is a message passed from completeAction function to performAction function.");
+function completeAction(callback, message) {
+    callback(message);
     console.log("Action complete!");
 }
 
-completeAction(performAction);
+completeAction(performAction, "Time to practise coding!");
 
 //  Execution sequence:
 //  1. performAction is passed to completeAction.
@@ -1151,6 +1152,7 @@ completeAction(performAction);
 //  6. "Action complete!" is printed.
 
 
+//TODO  Lesson 07 — Crash Course on HTTP Requests
 
 
 
