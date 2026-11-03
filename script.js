@@ -1154,30 +1154,112 @@ completeAction(performAction, "Time to practise coding!");
 
 //TODO  Lesson 07 — Crash Course on HTTP Requests
 
+//? 1. What is HTTP?
+//  HTTP stands for Hypertext Transfer Protocol.
+//  HTTP is a set of rules that allows a client and a server to communicate and exchange information.
+
+//? 2. What is an HTTP request?
+//  An HTTP request is a message sent by a client to a server asking it to perform an operation or provide information.
+
+//* The request contains several important pieces of information.
+//  Part	    Purpose
+//  URL	        Identifies the resource being requested
+//  Method	    Indicates what operation the client wants
+//  Headers	    Provide additional information about the request
+//  Body	    Can carry data sent to the server
+
+//? A. URL — Where are we sending the request?
+//  URL stands for Uniform Resource Locator.
+
+//? B. HTTP methods — What do we want to do?
+//  The HTTP method tells the server what kind of operation the client wants.
+
+//* The most important methods for our current learning are:
+//  Method	    Purpose	                        Example
+//  GET	        Retrieve information	        Get a list of products
+//  POST	    Submit information	            Create a new product
+//  PUT	        Replace information	            Update a product
+//  PATCH	    Partially update information	Change a product's price
+//  DELETE	    Remove information	            Delete a product
+
+//? C. Headers — Additional information
+//  Headers provide extra details about a request or response.
+
+//? D. Body — The information being sent
+//  A request body carries data from the client to the server.
+
+//? 3. What is an HTTP response?
+//  After receiving a request, the server sends a response back to the client.
+
+//* An HTTP response normally contains three important things:
+//  1. A status code.
+//  2. Response headers.
+//  3. A response body (when one is provided).
+
+//? A. Status codes — Did the request succeed?
+//  The server uses a numerical status code to communicate the result.
+
+//* Here are some common examples:
+//  Status      Meaning
+//  200	        OK — request succeeded
+//  201	        Created — a resource was created
+//  400	        Bad Request — request was invalid
+//  401	        Unauthorized — authentication is required
+//  403	        Forbidden — access is not permitted
+//  404	        Not Found — resource could not be found
+//  500	        Internal Server Error — something went wrong on the server
+
+//? B. Response headers
+//  Just as request headers provide information about the request, response headers provide information about the server's response.
+
+//? C. Response body
+//  The response body contains the information returned by the server.
+
+//? 4. HTTP versus HTTPS
+//  You will commonly see two protocols in website addresses:
+//  - HTTP
+//  - HTTPS
+//  HTTPS means HTTP Secure.
+
+//  HTTPS uses encryption through TLS to protect communication between the client and server.
+//  In practical terms, HTTPS helps protect information exchanged between your browser and a website from being read or modified by someone intercepting the connection.
+
+//  For modern websites, HTTPS is the standard.
+
+//  5. How does this connect to JavaScript?
+//  This is where our current module becomes particularly interesting.
+
+//  Imagine that you are building a website that displays jokes.
+//  You do not want to write every joke directly into your JavaScript code. Instead, you want your application to request a joke from an external server.
 
 
+//TODO  Lesson 08 — DevTools Network Tab
 
+//? Why the Network tab matters
+//  When a website loads, it often makes requests to servers for information and resources. The browser's Network tab lets you inspect those requests and see what happens between the browser (client) and the server.
 
+//* Opening the Network tab
+//  In Chrome:
+//  1. Open a website.
+//  2. Right-click the page and select Inspect.
+//  3. Select the Network tab.
+//  4. Refresh the page while the Network tab is open.
+//  You should see a list of network requests. Each row represents a request made by the browser.
 
+//* What to look for
+//  For now, concentrate on these four things:
+//  Network detail          What it tells you
+//  Name	                The resource or endpoint requested
+//  Status	                Whether the request succeeded or failed (for example, 200 or 404)
+//  Type	                The kind of resource requested
+//  Method	                The HTTP method, such as GET or POST
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//* When you select an individual request, DevTools provides more information:
+//  - Headers: Request and response metadata, including the URL, method and status.
+//  - Payload: Data sent with the request, when applicable.
+//  - Preview: A convenient view of the response.
+//  - Response: The actual response content returned by the server.
+//  - Timing: How long different parts of the request took.
 
 
 
