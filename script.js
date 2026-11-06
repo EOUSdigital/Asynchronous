@@ -1325,8 +1325,14 @@ xhr.send();
 
 //  XHR is asynchronous by default when used this way. JavaScript can continue executing while the browser waits for the server's response.
 
+//  1. What is AJAX?
+//  Asynchronous JavaScript and XML usually referred to as Ajax is a set of web development techniques that uses various asynchronous web technologies on the client side to create web application.
 
+//  2. What is the role of the XMLHttpRequest object?
+//  The XMLHttpRequest object can be used to exchange data with a web server behind the scenes.
 
+//  3. What is the difference between .open() and .send()?
+//  .open() will configure the request and .send() actually sends it.
 
 
 
