@@ -1323,20 +1323,31 @@ xhr.send();
 
 //! Important: .open() configures the request; .send() actually sends it.
 
-//  XHR is asynchronous by default when used this way. JavaScript can continue executing while the browser waits for the server's response.
 
-//  1. What is AJAX?
-//  Asynchronous JavaScript and XML usually referred to as Ajax is a set of web development techniques that uses various asynchronous web technologies on the client side to create web application.
+//? Your task: Write the pseudocode for these four steps in your own words. Don't write JavaScript syntax yet.
 
-//  2. What is the role of the XMLHttpRequest object?
-//  The XMLHttpRequest object can be used to exchange data with a web server behind the scenes.
+//* Solution
+```js
+Begin
 
-//  3. What is the difference between .open() and .send()?
-//  .open() will configure the request and .send() actually sends it.
+Create an XMLHttpRequest object.
 
+Configure it to send a GET request to the joke server.
 
+Send the request.
 
+Wait for the server's response.
 
+When the response arrives:
+    Check whether the request was successful.
+    If successful:
+        Extract the joke from the returned data.
+        Display the joke on the webpage.
+    Otherwise:
+        Display an error message.
+
+End
+```
 
 
 
