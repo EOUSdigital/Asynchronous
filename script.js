@@ -1349,7 +1349,28 @@ When the response arrives:
 End
 ```
 
+//? Exercise
 
+const xhr = XMLHttpRequest();
+
+xhr.open('GET', 'https://www.webjokes.com/jokes/')
+
+xhr.onload = function() {
+    if (xhr.status === 200)  {
+        console.log(xhr.responseText);
+    }
+
+    if (xhr === joke) {
+        return xhr;
+    } else {
+        return 'Try again, maybe next time you will be successful.'
+    }
+}
+
+//  The main distinction correctly:
+//  = is the assignment operator. It assigns a value to a variable or property.
+//  == is the loose equality operator. It compares two values, allowing JavaScript to convert their types before comparing them.
+//  === is strict equality. It compares both value and type, without type conversion.
 
 
 
