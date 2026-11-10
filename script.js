@@ -1351,11 +1351,12 @@ End
 
 //? Exercise
 
-const xhr = XMLHttpRequest();
+const xhr = XMLHttpRequest.open();
 
 xhr.open('GET', 'https://www.webjokes.com/jokes/')
 
 xhr.onload = function() {
+    const joke = '';
     if (xhr.status === 200)  {
         console.log(xhr.responseText);
     }
