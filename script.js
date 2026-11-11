@@ -1351,22 +1351,19 @@ End
 
 //? Exercise
 
-const xhr = XMLHttpRequest.open();
+const xhttp = new XMLHttpRequest();
 
-xhr.open('GET', 'https://www.webjokes.com/jokes/')
+xhttp.open('GET', 'https://www.webjokes.com/jokes/')
 
-xhr.onload = function() {
-    const joke = '';
-    if (xhr.status === 200)  {
-        console.log(xhr.responseText);
-    }
-
-    if (xhr === joke) {
-        return xhr;
+xhttp.onload = function() {
+    if (xhttp.status === 200)  {
+        console.log(xhttp.responseText);
     } else {
-        return 'Try again, maybe next time you will be successful.'
+        console.log('Try again, maybe next time you will be successful.');
     }
 }
+
+xhttp.send();
 
 //  The main distinction correctly:
 //  = is the assignment operator. It assigns a value to a variable or property.
